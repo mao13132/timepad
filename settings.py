@@ -11,7 +11,7 @@ import os
 JOB_LIST = [
     {
         'name': '+79165097308',
-        'name_browser': 'timepad2',
+        'name_browser': 'timepad',
         'channels': ['https://t.me/SvetoforSevernoe', ''],
         'search_word': 'контейнер',
         'date': '01.09.2023',

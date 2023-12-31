@@ -6,3 +6,4 @@ src/sessions/
 downloads/
 src/browser/profile/
 monit.db
+_temp.py

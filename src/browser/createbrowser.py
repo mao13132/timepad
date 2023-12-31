@@ -13,13 +13,9 @@ from settings import dir_project, IS_ACTIVE_BROWSER
 
 
 class CreatBrowser:
-    def __init__(self):
-
-        name_profile = 'timepad'
+    def __init__(self, name_profile):
 
         options = webdriver.ChromeOptions()
-
-        user_system = getpass.getuser()
 
         options.add_argument(
             f"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -56,9 +52,13 @@ class CreatBrowser:
         options.add_argument("--disable-gpu")
 
         options.add_argument('--no-sandbox')
+
         options.add_argument('--disable-dev-shm-usage')
+
         options.add_argument('ignore-certificate-errors')
+
         options.add_argument("--log-level=3")
+
         tz_params = {'timezoneId': 'Asia/Almaty'}
 
         try:
