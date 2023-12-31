@@ -6,20 +6,19 @@
 # 1.0       2023    Initial Version
 #
 # ---------------------------------------------
-import os
+import asyncio
 import traceback
 import sys
 
-from settings import sessions_path
-from src.browser.createbrowser import CreatBrowser
+from settings import sessions_path, JOB_LIST, dir_project
 from src.logic.clear import _clear
 from src.sql.bot_connector import BotDB
+from src.telegram.monitoring_telegram import MonitoringTelegram
+from src.telegram.start_iter_chat import StartIterTgChat
 
 
-def main():
-    patch_project = os.path.dirname(__file__)
-
-    await _clear(patch_project)
+async def main():
+    await _clear(dir_project)
 
     telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
 
@@ -28,9 +27,29 @@ def main():
 
         return False
 
-    await telegram_core._send_admin('Начинаю работу', patch_project)
+    await telegram_core._send_admin('Начинаю работу', dir_project)
 
+    job_dict = JOB_LIST
 
+    dict_posts = await StartIterTgChat(telegram_core, BotDB, job_dict).start_iter()
+
+    if not dict_posts:
+        try:
+            telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
+        except:
+            return False
+
+    count_post = sum([len(x['posts']) for x in dict_posts])
+
+    if count_post == 0:
+        print(f'Новых постов для публикации нет. Ожидание новых постов в Telegram')
+
+        return False
+
+    if job_dict == []:
+        print(f'Нет новых постов на публикацию')
+
+        return False
 
     # browser = CreatBrowser()
     #
@@ -43,15 +62,18 @@ def main():
     #
     # print()
 
+    # res_yandex_job = await YandexStart(BotDB, telegram_core, job_dict).start_yandex_load()
+
+    print(f'Закончил, делаю паузу. В ожидании новых постов в Telegram')
+
+    await _clear(dir_project)
+
 
 if __name__ == '__main__':
 
     try:
-        main()
+        res = asyncio.run(main())
     except Exception as es:
         print(f"Ошибка при работе главного потока"
               f"{''.join(traceback.format_exception(sys.exc_info()[0], sys.exc_info()[1], sys.exc_info()[2]))}")
 
-    finally:
-
-        browser.driver.quit()
