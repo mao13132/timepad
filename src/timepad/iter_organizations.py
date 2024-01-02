@@ -6,6 +6,7 @@
 # 1.0       2023    Initial Version
 #
 # ---------------------------------------------
+from src.timepad.change_cabinet import ChangeCabinet
 from src.timepad.go_site import GoSite
 
 
@@ -18,7 +19,15 @@ class IterOrganizations:
         self.account = settings['account']
 
     async def _iter_organizations(self):
+        change_core = ChangeCabinet(self.settings)
+
         for organization in self.account['organization']:
+
+            res_change = change_core.start_change(organization)
+
+            if not res_change:
+                continue
+
             print()
 
     async def start_iter(self):

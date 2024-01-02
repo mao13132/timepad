@@ -10,6 +10,7 @@ import time
 
 from src.timepad.auth import Auth
 from src.timepad.check_auth import check_auth
+from src.timepad.click_create_event import loop_click_create_event
 from src.timepad.load_page import LoadPage
 
 
@@ -42,4 +43,6 @@ class GoSite:
         if not is_auth:
             is_auth = Auth(self.settings).start_auth()
 
-        return is_auth
+        res_create_event = loop_click_create_event(self.driver)
+
+        return res_create_event

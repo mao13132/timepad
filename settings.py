@@ -12,10 +12,10 @@ JOB_LIST = [
     {
         'name': '+79165097308',
         'name_browser': 'timepad',
-        'channels': ['https://t.me/SvetoforSevernoe', ''],
-        'search_word': 'контейнер',
+        'channels': ['https://t.me/ktd_info_tech', ''],
+        'search_word': '',
         'date': '01.09.2023',
-        'organization': ['org1', 'org2']
+        'organization': ['Мероприятия Чехов', 'org2'],
     },
     {
         'name': '+79165111',
@@ -23,7 +23,7 @@ JOB_LIST = [
         'channels': ['https://t.me/SvetoforSevernoe', ''],
         'search_word': '',
         'date': '01.09.2023',
-        'organization': ['org1', 'org2']
+        'organization': ['370017', 'org2'],
     }
 ]
 
