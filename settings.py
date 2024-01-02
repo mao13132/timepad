@@ -27,10 +27,6 @@ JOB_LIST = [
     }
 ]
 
-dir_project = os.getcwd()
-
-sessions_path = os.path.join(dir_project, 'src', 'sessions')
-
 IS_ACTIVE_BROWSER = True
 
 BLACK_LIST = ['СВО', 'политика']
@@ -44,3 +40,7 @@ ADMIN = ['@mao13132']
 API_ID = 10127986  # API ID от аккаунта-userbot
 
 API_HASH = 'aa82ee4486b373a2e2e4516c68c3916f'  # API hash от аккаунта-userbot
+
+dir_project = os.getcwd()
+
+sessions_path = os.path.join(dir_project, 'src', 'sessions')

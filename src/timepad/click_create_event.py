@@ -33,7 +33,7 @@ def loop_click_create_event(driver):
 
             continue
 
-        res_load = check_load(driver, '//*[contains(text(), "Монетизация")]')
+        res_load = check_load(driver, '//*[contains(@class, "mpaidtariffdesc")]')
 
         if not res_load:
             time.sleep(1)
