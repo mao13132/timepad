@@ -14,7 +14,14 @@ from selenium.webdriver.common.action_chains import ActionChains
 from src.logic.check_load import check_load
 
 from src.logic.sort_posts import sort_posts
+from src.timepad.click_online import click_online
+from src.timepad.click_publish import click_publish_
+from src.timepad.write_address import write_address_
+from src.timepad.write_category import write_category_
+from src.timepad.write_city import write_city_
+from src.timepad.write_date import write_date_
 from src.timepad.write_desc import loop_write_desc
+from src.timepad.write_time import write_times
 from src.timepad.write_title import loop_write_title
 
 
@@ -63,7 +70,8 @@ class CreateEvent:
             res_load = check_load(self.driver, '//*[contains(text(), "Редактирование названия")]', 15)
 
             if not res_load:
-                no_events = check_load(self.driver, '//*[contains(text(), "У вас пока нет событий")]')
+                no_events = check_load(self.driver, '//*[contains(text(), "У вас пока нет событий") or '
+                                                    'contains(text(), "Все события")]')
 
                 if not no_events:
                     continue
@@ -101,6 +109,30 @@ class CreateEvent:
             write_desc = loop_write_desc(self.driver, desc)
 
             print(f'Результат написания описания: "{write_desc}"')
+
+            click_offline = click_online(self.driver)
+
+            write_city = write_city_(self.driver, post['city'])
+
+            print(f'Результат написания города: "{write_city}"')
+
+            write_address = write_address_(self.driver, post['address'])
+
+            print(f'Результат написания адреса: "{write_address}"')
+
+            write_date = write_date_(self.driver, post['date_event'])
+
+            print(f'Результат выбора даты: "{write_date}"')
+
+            write_time = write_times(self.driver, post['time_event'])
+
+            print(f'Результат написания времени: "{write_time}"')
+
+            write_category = write_category_(self.driver, post['category'])
+
+            print(f'Результат выбора категории: "{write_category}"')
+
+            click_next = click_publish_(self.driver)
 
             print()
 

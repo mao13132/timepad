@@ -8,6 +8,13 @@ from settings import *
 from datetime import datetime
 
 from src.logic.check_black import CheckBlack
+from src.logic.search_adress import search_address
+from src.logic.search_age import search_age
+from src.logic.search_category import search_category_
+from src.logic.search_city import search_city_func
+from src.logic.search_date import search_date
+from src.logic.search_price import search_price
+from src.logic.search_time import search_time
 
 
 class MonitoringTelegram:
@@ -57,18 +64,6 @@ class MonitoringTelegram:
                 continue
 
         return True
-
-    async def send_admin(self, message, target_keyb, chat_id):
-        msg = await self.formated_msg(message, target_keyb, chat_id)
-
-        resp = await self._send_admin(msg)
-
-        if resp:
-            print(f'{datetime.now().strftime("%H:%M:%S")} Отправил пост админу. Встаю на паузу')
-
-            return True
-
-        return False
 
     async def download_media(self, list_rows_media):
         good_media_list = []
@@ -147,11 +142,30 @@ class MonitoringTelegram:
 
             stop_title_list.append(one_post['title'])
 
+            one_post['category'] = search_category_(text_msg)
+
+            one_post['time_event'] = search_time(text_msg)
+
+            one_post['age'] = search_age(text_msg)
+
+            one_post['date_event'] = search_date(text_msg)
+
+            one_post['price'] = search_price(text_msg)
+
+            one_post['city'] = search_city_func(text_msg)
+
+            one_post['address'] = search_address(text_msg)
+
             one_post['date_post'] = date_post
+
             one_post['text'] = text_msg
+
             one_post['media'] = good_media_list
+
             one_post['chat_id'] = chat_id
+
             one_post['source'] = link_chat
+
             one_post['link'] = message.link
 
             good_post.append(one_post)

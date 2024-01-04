@@ -11,6 +11,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+from src.timepad.close_popup import close_popup
+
 
 class ChangeCabinet:
     def __init__(self, settings):
@@ -76,14 +78,6 @@ class ChangeCabinet:
 
         return True
 
-    def close_popup(self):
-        try:
-            self.driver.find_element(by=By.XPATH, value=f"//*[contains(@class,'body')]").click()
-        except:
-            return False
-
-        return True
-
     def _change_cabinet(self, organization):
         for _try in range(3):
             move_popup = self.move_popup()
@@ -134,7 +128,7 @@ class ChangeCabinet:
 
                 continue
 
-            self.close_popup()
+            close_popup(self.driver)
 
             return True
 

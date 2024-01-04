@@ -45,9 +45,9 @@ class TimePadApi:
 
         data = {"organization": {
             "id": self.settings['organization'],
-            "subdomain": "laboratoriya-event.timepad.ru"
+            "subdomain": self.settings['organization_name']
         },
-            "starts_at": "2024-01-12T11:28:30.293Z",
+            "starts_at": "2024-01-13T11:28:30.293Z",
             # "ends_at": "2024-01-02T11:28:30.293Z",
             "name": self.settings['name'],
             "categories": [
@@ -75,10 +75,11 @@ class TimePadApi:
 
 if __name__ == '__main__':
     settings = {
-        'api_key': 'f4017e3910c3809dc7e12bb4ba5fd672f7b6a8be',
-        'organization': 370017,
-        'start_date': '2024-01-12',
-        'name': 'тестовое событие',
+        'api_key': 'f7b81c7478b3adb722c701c48c5d548a34387032',
+        'organization': 370008,
+        'organization_name': 'podolsk-events',
+        'start_date': '2024-01-13',
+        'name': 'Тестовое событие',
         'category': 'Искусство и культура'
     }
 

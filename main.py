@@ -28,8 +28,6 @@ async def main():
     #
     #     return False
     #
-    # await telegram_core._send_admin('Начинаю работу', dir_project)
-    #
     # job_dict = JOB_LIST
     #
     # dict_posts = await StartIterTgChat(telegram_core, BotDB, job_dict).start_iter()
