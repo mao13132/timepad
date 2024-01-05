@@ -10,6 +10,7 @@ import time
 
 from src.timepad.auth import Auth
 from src.timepad.check_auth import check_auth
+from src.timepad.check_spam import check_spam_
 from src.timepad.click_create_event import loop_click_create_event
 from src.timepad.load_page import LoadPage
 
@@ -31,18 +32,30 @@ class GoSite:
 
     def start_go(self):
 
-        in_site = self._go_site()
+        for _spam_try in range(2):
 
-        if not in_site:
-            return False
+            in_site = self._go_site()
 
-        time.sleep(2)
+            if not in_site:
+                return False
 
-        is_auth = check_auth(self.driver)
+            time.sleep(5)
 
-        if not is_auth:
-            is_auth = Auth(self.settings).start_auth()
+            is_auth = check_auth(self.driver)
 
-        res_create_event = loop_click_create_event(self.driver)
+            time.sleep(5)
 
-        return res_create_event
+            if not is_auth:
+                is_auth = Auth(self.settings).start_auth()
+
+            spam = check_spam_(self.driver)
+
+            if spam:
+                continue
+
+            res_create_event = loop_click_create_event(self.driver)
+
+            if res_create_event == 'spam':
+                continue
+
+            return res_create_event

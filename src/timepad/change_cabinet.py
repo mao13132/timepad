@@ -39,17 +39,27 @@ class ChangeCabinet:
         return org_name
 
     def move_popup(self):
-        try:
-            panel = self.driver.find_element(by=By.XPATH, value=f"//*[contains(@aria-describedby,'popup-1')]")
-        except:
-            return False
+        for _try in range(3):
+            try:
+                panel = self.driver.find_element(by=By.XPATH, value=f"//*[contains(@aria-describedby,'popup-1')]")
+            except:
+                time.sleep(1)
 
-        try:
-            ActionChains(self.driver).move_to_element(panel).perform()
-        except:
-            return False
+                continue
 
-        return True
+            try:
+                ActionChains(self.driver).move_to_element(panel).perform()
+            except:
+                time.sleep(1)
+
+                continue
+
+            return True
+
+        print(f'Не смог открыть меню с организациями')
+
+        return False
+
 
     def check_status_popup(self):
         try:
@@ -121,7 +131,7 @@ class ChangeCabinet:
 
             _organization = self.lower_value(organization)
 
-            if site_org != _organization:
+            if _organization not in site_org:
                 change_res = self._change_cabinet(organization)
 
                 time.sleep(1)

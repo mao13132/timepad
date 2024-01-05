@@ -11,16 +11,24 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
+from src.browser.createbrowser import CreatBrowser
 from src.logic.check_load import check_load
+from src.timepad.change_cabinet import ChangeCabinet
 
-from src.logic.sort_posts import sort_posts
+from src.timepad.click_finish_step import click_finish_step
+from src.timepad.click_four_step import click_four_step_
 from src.timepad.click_online import click_online
-from src.timepad.click_publish import click_publish_
+from src.timepad.click_three_step import click_three_step
+from src.timepad.click_two_step import click_two_step
+from src.timepad.close_banner import close_banner
+from src.timepad.go_site import GoSite
 from src.timepad.write_address import write_address_
+from src.timepad.write_age import write_age_
 from src.timepad.write_category import write_category_
 from src.timepad.write_city import write_city_
 from src.timepad.write_date import write_date_
 from src.timepad.write_desc import loop_write_desc
+from src.timepad.write_price import write_price_
 from src.timepad.write_time import write_times
 from src.timepad.write_title import loop_write_title
 
@@ -29,7 +37,9 @@ class CreateEvent:
     def __init__(self, settings):
         self.settings = settings
 
-        self.driver = settings['driver']
+        self.driver = False
+
+        self.name_profile = settings['name_profile']
 
     def click_create_event_button(self):
         try:
@@ -96,13 +106,54 @@ class CreateEvent:
 
         return False
 
-    def iter_posts(self, posts):
+    def iter_posts(self, posts, organization):
+
         for post in posts:
+            browser_core = CreatBrowser(self.name_profile)
+
+            if not browser_core.driver:
+                print(f'Не могу создать браузер пропускаю аккаунт "{self.name_profile}"')
+
+                return False
+
+            self.driver = browser_core.driver
+
+            self.settings['driver'] = self.driver
+
+            in_site = GoSite(self.settings).start_go()
+
+            if not in_site:
+                print(f'Не смог зайти на сайт')
+
+                self.driver.quit()
+
+                continue
+
+            res_change = ChangeCabinet(self.settings).start_change(organization)
+
+            if not res_change:
+                self.driver.quit()
+
+                continue
+
+            res_load = self.loop_load_page()
+
+            if not res_load:
+                self.driver.quit()
+
+                continue
+
+            time.sleep(2)
+
+            close_banner(self.driver)
+
             title = post['title']
 
             write_title = loop_write_title(self.driver, title)
 
             print(f'Результат написания заголовка: "{write_title}"')
+
+            time.sleep(2)
 
             desc = post['text']
 
@@ -110,42 +161,85 @@ class CreateEvent:
 
             print(f'Результат написания описания: "{write_desc}"')
 
+            time.sleep(2)
+
             click_offline = click_online(self.driver)
 
             write_city = write_city_(self.driver, post['city'])
 
             print(f'Результат написания города: "{write_city}"')
 
+            time.sleep(2)
+
             write_address = write_address_(self.driver, post['address'])
 
             print(f'Результат написания адреса: "{write_address}"')
+
+            time.sleep(2)
 
             write_date = write_date_(self.driver, post['date_event'])
 
             print(f'Результат выбора даты: "{write_date}"')
 
-            write_time = write_times(self.driver, post['time_event'])
+            time.sleep(2)
 
-            print(f'Результат написания времени: "{write_time}"')
+            write_time = write_times(self.driver, post['time_event'], 0)
+
+            print(f'Результат написания времени начала: "{write_time}"')
+
+            write_time = write_times(self.driver, '23:59', 1)
+
+            print(f'Результат написания времени окончания: "{write_time}"')
+
+            time.sleep(2)
 
             write_category = write_category_(self.driver, post['category'])
 
             print(f'Результат выбора категории: "{write_category}"')
 
-            click_next = click_publish_(self.driver)
+            time.sleep(2)
 
-            print()
+            click_next = click_two_step(self.driver)
 
-    def start_create(self, posts, search_word):
-        res_load = self.loop_load_page()
+            time.sleep(5)
 
-        if not res_load:
-            return False
+            click_next2 = click_three_step(self.driver)
 
-        _posts = sort_posts(posts, search_word)
+            time.sleep(5)
 
-        res_write = self.iter_posts(posts)
+            if post['price'] != 0:
+                res_price = write_price_(self.driver, post['price'])
 
-        print()
+                print(f'Результат установки стоимости: "{res_price}"')
+
+                time.sleep(2)
+
+            click_next3 = click_four_step_(self.driver)
+
+            time.sleep(5)
+
+            write_age = write_age_(self.driver, post['age'])
+
+            print(f'Результат установки возрастных ограничений: "{write_age}"')
+
+            time.sleep(2)
+
+            finish = click_finish_step(self.driver)
+
+            print(f'Результат опубликование события: "{finish}"')
+
+            self.settings['BotDB'].add_message(post['chat_id'], post['title'], post['date_post'], organization)
+
+            print(f'Перезапускаю браузер')
+
+            self.driver.quit()
+
+            time.sleep(10)
 
         return True
+
+    def start_create(self, posts, organization):
+
+        res_write = self.iter_posts(posts, organization)
+
+        return res_write

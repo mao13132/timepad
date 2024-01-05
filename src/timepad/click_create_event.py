@@ -11,6 +11,7 @@ import time
 from selenium.webdriver.common.by import By
 
 from src.logic.check_load import check_load
+from src.timepad.check_spam import check_spam_
 
 
 def click_create_event(driver):
@@ -25,7 +26,11 @@ def click_create_event(driver):
 
 
 def loop_click_create_event(driver):
-    for _try in range(3):
+    for _try in range(5):
+
+        if _try >= 2:
+            return 'spam'
+
         res_click = click_create_event(driver)
 
         if not res_click:
@@ -33,9 +38,14 @@ def loop_click_create_event(driver):
 
             continue
 
-        res_load = check_load(driver, '//*[contains(@class, "mpaidtariffdesc")]')
+        res_load = check_load(driver, '//*[contains(@class, "mpaidtariffdesc")]', 10)
 
         if not res_load:
+            is_spam = check_spam_(driver)
+
+            if is_spam:
+                return 'spam'
+
             time.sleep(1)
 
             continue

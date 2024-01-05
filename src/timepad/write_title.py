@@ -8,7 +8,20 @@
 # ---------------------------------------------
 import time
 
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
+
+
+def clear_value(driver, count):
+    for _try in range(count):
+
+        try:
+            driver.find_element(by=By.XPATH,
+                                value=f"//*[@name='event_name']").send_keys(Keys.BACKSPACE)
+        except:
+            return False
+
+    return True
 
 
 def write_title(driver, title):
@@ -31,7 +44,19 @@ def get_title(driver):
     return title_text
 
 
+def clear_text(driver):
+    site_title = get_title(driver)
+
+    count_clear = len(site_title)
+
+    res_clear = clear_value(driver, count_clear)
+
+    return res_clear
+
+
 def loop_write_title(driver, title):
+    res_clear = clear_text(driver)
+
     for _try in range(3):
         site_title = get_title(driver)
 

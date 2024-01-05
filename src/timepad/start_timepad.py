@@ -6,7 +6,8 @@
 # 1.0       2023    Initial Version
 #
 # ---------------------------------------------
-from src.browser.createbrowser import CreatBrowser
+# from src.browser.createbrowser import CreatBrowser
+from src.browser.createbrowser_uc import CreatBrowser
 from src.timepad.iter_organizations import IterOrganizations
 
 
@@ -29,16 +30,9 @@ class TimePad:
 
             print(f'Начинаю работу с "{name_}" "{name_profile}"')
 
-            browser_core = CreatBrowser(name_profile)
-
-            if not browser_core.driver:
-                print(f'Не могу создать браузер пропускаю аккаунт "{name_profile}"')
-
-                continue
-
-            self.settings['driver'] = browser_core.driver
-
             self.settings['account'] = account
+
+            self.settings['name_profile'] = name_profile
 
             res = await IterOrganizations(self.settings).start_iter()
 
