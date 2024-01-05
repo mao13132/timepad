@@ -15,6 +15,11 @@ def clear_price(value: str):
         if x.isdigit() or x in symbol:
             price += x
 
-    price = float(price)
+    try:
+        price = float(price)
+    except:
+        print(f'\nУстанавливаю 0 цену т.к. не могу вытащить её из "{value}"\n')
+
+        price = 0
 
     return price

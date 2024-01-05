@@ -12,7 +12,7 @@ from src.logic.clear_age import clear_age
 def search_age(text_msg):
     row_list = text_msg.split('\n')
 
-    age = ''
+    age = 0
 
     for row in row_list:
         if 'озраст' in row:

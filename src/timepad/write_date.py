@@ -6,6 +6,9 @@
 # 1.0       2023    Initial Version
 #
 # ---------------------------------------------
+import time
+
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 month_dict = {
@@ -68,6 +71,31 @@ def open_panel_date(driver):
     return True
 
 
+def move_calendar(driver):
+    for _try in range(3):
+
+        try:
+            panel = driver.find_element(by=By.XPATH,
+                                        value=f"//button[contains(@title, 'event_action')]")
+        except:
+            time.sleep(1)
+
+            continue
+
+        try:
+            ActionChains(driver).move_to_element(panel).perform()
+        except:
+            time.sleep(1)
+
+            continue
+
+        return True
+
+    print(f'Не смог навестись ниже календаря')
+
+    return False
+
+
 def get_value_from_date(count, date):
     try:
         date_ = date.split('.')[count]
@@ -128,6 +156,8 @@ def insert_mont(month, site_month, driver):
 
 
 def write_date_(driver, date):
+    res_move = move_calendar(driver)
+
     is_open = open_panel_date(driver)
 
     if not is_open:

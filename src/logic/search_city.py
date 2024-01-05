@@ -7,14 +7,33 @@
 #
 # ---------------------------------------------
 def search_city_func(text_msg):
-    if '📍 г.о. ' in text_msg:
-        city = text_msg.split('📍 г.о. ')[-1]
+    row_list = text_msg.split('\n')
 
-        city = city.split(',')[0]
+    for row in row_list:
+        if 'г.о. ' in row:
+            city = text_msg.split('г.о. ')[-1]
 
-    else:
-        print(f'Не могу определить город "{text_msg}"')
+            if ',' in city:
+                city = city.split(',')[0]
 
-        city = ''
+            if '\n' in city:
+                city = city.split('\n')[0]
+
+            return city
+
+        if 'г. ' in row:
+            city = text_msg.split('г. ')[-1]
+
+            if ',' in city:
+                city = city.split(',')[0]
+
+            if '\n' in city:
+                city = city.split('\n')[0]
+
+            return city
+
+    print(f'\nНе могу определить город "{text_msg}"')
+
+    city = ''
 
     return city

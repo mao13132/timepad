@@ -36,9 +36,11 @@ class TimePad:
 
             res = await IterOrganizations(self.settings).start_iter()
 
-            print()
+            print(f'Закончил работу с "{name_}" "{name_profile}"\n')
 
-        print()
+        print(f'Закончил работу со связкой')
+
+        return True
 
     async def start_job(self):
         res_iter = await self.iter_account()

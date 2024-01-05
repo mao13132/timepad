@@ -45,6 +45,6 @@ def write_price_(driver, price):
 
     res_write = _write_price(driver, price)
 
-    close_popup(driver)
+    # close_popup(driver)
 
     return res_write

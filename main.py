@@ -19,38 +19,38 @@ from src.timepad.start_timepad import TimePad
 
 
 async def main():
-    # await _clear(dir_project)
-    #
-    # telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
-    #
-    # if not telegram_core:
-    #     print(f'Нет смог подключиться к аккаунту телеграм')
-    #
-    #     return False
-    #
-    # job_dict = JOB_LIST
-    #
-    # dict_posts = await StartIterTgChat(telegram_core, BotDB, job_dict).start_iter()
-    #
-    # if not dict_posts:
-    #     try:
-    #         telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
-    #     except:
-    #         return False
-    #
-    # count_post = sum([len(x['posts']) for x in dict_posts])
-    #
-    # if count_post == 0:
-    #     print(f'Новых постов для публикации нет. Ожидание новых постов в Telegram')
-    #
-    #     return False
-    #
-    # if job_dict == []:
-    #     print(f'Нет новых постов на публикацию')
-    #
-    #     return False
+    await _clear(dir_project)
 
-    from _temp import job_dict_ as job_dict
+    telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
+
+    if not telegram_core:
+        print(f'Нет смог подключиться к аккаунту телеграм')
+
+        return False
+
+    job_dict = JOB_LIST
+
+    dict_posts = await StartIterTgChat(telegram_core, BotDB, job_dict).start_iter()
+
+    if not dict_posts:
+        try:
+            telegram_core = await MonitoringTelegram(sessions_path, BotDB).start_tg()
+        except:
+            return False
+
+    count_post = sum([len(x['posts']) for x in dict_posts])
+
+    if count_post == 0:
+        print(f'Новых постов для публикации нет. Ожидание новых постов в Telegram')
+
+        return False
+
+    if job_dict == []:
+        print(f'Нет новых постов на публикацию')
+
+        return False
+
+    # from _temp import job_dict_ as job_dict
 
     settings = {
         'job_dict': job_dict,

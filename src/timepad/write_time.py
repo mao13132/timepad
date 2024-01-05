@@ -87,6 +87,6 @@ def write_times(driver, times, count):
 
     res_write = write_time(driver, times, count)
 
-    close_popup(driver)
+    # close_popup(driver)
 
     return True

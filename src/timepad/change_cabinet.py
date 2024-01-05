@@ -138,7 +138,7 @@ class ChangeCabinet:
 
                 continue
 
-            close_popup(self.driver)
+            # close_popup(self.driver)
 
             return True
 

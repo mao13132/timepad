@@ -154,6 +154,9 @@ class MonitoringTelegram:
 
             one_post['city'] = search_city_func(text_msg)
 
+            if not one_post['city']:
+                continue
+
             one_post['address'] = search_address(text_msg)
 
             one_post['date_post'] = date_post

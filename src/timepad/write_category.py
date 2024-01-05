@@ -36,7 +36,7 @@ def click_category(driver, category):
 
 
 def write_category_(driver, category):
-    close_popup(driver)
+    # close_popup(driver)
 
     is_open = open_panel(driver)
 
@@ -45,6 +45,6 @@ def write_category_(driver, category):
 
     res_click = click_category(driver, category)
 
-    close_popup(driver)
+    # close_popup(driver)
 
     return res_click

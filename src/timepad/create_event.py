@@ -21,7 +21,9 @@ from src.timepad.click_online import click_online
 from src.timepad.click_three_step import click_three_step
 from src.timepad.click_two_step import click_two_step
 from src.timepad.close_banner import close_banner
+from src.timepad.ftp_job import ftp_jobs
 from src.timepad.go_site import GoSite
+from src.timepad.inser_image import insert_image_
 from src.timepad.write_address import write_address_
 from src.timepad.write_age import write_age_
 from src.timepad.write_category import write_category_
@@ -162,6 +164,12 @@ class CreateEvent:
             print(f'Результат написания описания: "{write_desc}"')
 
             time.sleep(2)
+
+            link = ftp_jobs(post['media'][0])
+
+            res_load_image = insert_image_(self.driver, link)
+
+            print(f'Результат загрузки изображения: "{res_load_image}"')
 
             click_offline = click_online(self.driver)
 

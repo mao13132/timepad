@@ -15,4 +15,14 @@ def search_address(text_msg):
         if '📍' in row:
             address = row
 
-    return address
+            return address
+
+    for row in row_list:
+        if 'г.' in row:
+            address = row
+
+            return address
+
+    print(f'\nАдрес не обнаружен "{text_msg}"\n')
+
+    return ''
