@@ -10,18 +10,18 @@ import os
 
 JOB_LIST = [
     {
-        'name': '+79165097308',
-        'name_browser': 'timepad',  # Указывайте под каждый новый номер (аккаунт timepad) новое название учётки
+        'name': '+791650',
+        'name_browser': 'timepad2',  # Указывайте под каждый новый номер (аккаунт timepad) новое название учётки
         'channels': ['https://t.me/chekhov_events', ''],
         'search_word': '',
-        'date': '1.01.2024',
-        'organization': ['Мероприятия Чехов', 'Серпухов'],
+        'date': '25.12.2023',
+        'organization': ['kujhgk', 'Мероприятия Чехов', 'Серпухов'],
     },
     {
-        'name': '+79165097308',
-        'name_browser': 'timepad',  # Указывайте под каждый новый номер (аккаунт timepad) новое название учётки
+        'name': '+7916509',
+        'name_browser': 'timepad2',  # Указывайте под каждый новый номер (аккаунт timepad) новое название учётки
         'channels': ['', ''],
-        'search_word': '',
+        'search_word': '25.12.2023',
         'date': '1.01.2024',
         'organization': ['', ''],
     }

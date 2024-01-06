@@ -11,6 +11,7 @@ import time
 from selenium.webdriver.common.by import By
 
 from src.logic.check_load import check_load
+from src.timepad.check_auth import check_auth_two
 from src.timepad.check_spam import check_spam_
 
 
@@ -41,6 +42,11 @@ def loop_click_create_event(driver):
         res_load = check_load(driver, '//*[contains(@class, "mpaidtariffdesc")]', 10)
 
         if not res_load:
+            no_login = check_auth_two(driver)
+
+            if no_login:
+                return 'no_login'
+
             is_spam = check_spam_(driver)
 
             if is_spam:

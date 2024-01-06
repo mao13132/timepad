@@ -8,6 +8,7 @@
 # ---------------------------------------------
 import time
 
+from src.timepad.apply_cookie import apply_cookies
 from src.timepad.auth import Auth
 from src.timepad.check_auth import check_auth
 from src.timepad.check_spam import check_spam_
@@ -53,9 +54,16 @@ class GoSite:
             if spam:
                 continue
 
+            res_apply = apply_cookies(self.driver)
+
             res_create_event = loop_click_create_event(self.driver)
 
             if res_create_event == 'spam':
                 continue
+
+            if res_create_event == 'no_login':
+                print(f'Пройдите вторую авторизацию и перезапустите браузер')
+
+                return 'no_login'
 
             return res_create_event

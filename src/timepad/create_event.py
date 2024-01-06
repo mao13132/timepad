@@ -124,6 +124,9 @@ class CreateEvent:
 
             in_site = GoSite(self.settings).start_go()
 
+            if in_site == 'no_login':
+                return 'no_login'
+
             if not in_site:
                 print(f'Не смог зайти на сайт')
 
@@ -136,7 +139,7 @@ class CreateEvent:
             if not res_change:
                 self.driver.quit()
 
-                continue
+                return False
 
             res_load = self.loop_load_page()
 

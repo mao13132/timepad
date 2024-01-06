@@ -6,23 +6,16 @@
 # 1.0       2023    Initial Version
 #
 # ---------------------------------------------
+
 from selenium.webdriver.common.by import By
 
 
-def check_auth_two(driver):
+def apply_cookies(driver):
     try:
         driver.find_element(by=By.XPATH,
-                            value=f"//*[contains(text(), 'Вход и регистрация')]")
-    except:
-        return False
+                            value=f"//*[contains(@class, 'ccookie')]"
+                                  f"//button[contains(text(), 'Хорошо')]").click()
 
-    return True
-
-
-def check_auth(driver):
-    try:
-        driver.find_element(by=By.XPATH,
-                            value=f"//div[contains(@class, 'mmainmenu')]")
     except:
         return False
 

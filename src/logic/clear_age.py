@@ -13,6 +13,9 @@ def clear_age(value: str):
         if x.isdigit():
             age += x
 
-    age = int(age)
+    try:
+        age = int(age)
+    except:
+        age = 0
 
     return age

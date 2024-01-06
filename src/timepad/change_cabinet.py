@@ -89,7 +89,7 @@ class ChangeCabinet:
         return True
 
     def _change_cabinet(self, organization):
-        for _try in range(3):
+        for _try in range(2):
             move_popup = self.move_popup()
 
             if not move_popup:
@@ -116,6 +116,8 @@ class ChangeCabinet:
             click_org = self.click_org_name(organization)
 
             if not click_org:
+                print(f'Не могу найти организацию "{organization}"')
+
                 time.sleep(1)
 
                 continue
@@ -123,7 +125,7 @@ class ChangeCabinet:
             return True
 
     def loop_change(self, organization):
-        for _try in range(3):
+        for _try in range(2):
 
             site_org = self.get_cabinet_name()
 
@@ -137,8 +139,6 @@ class ChangeCabinet:
                 time.sleep(1)
 
                 continue
-
-            # close_popup(self.driver)
 
             return True
 

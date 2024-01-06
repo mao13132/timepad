@@ -34,6 +34,11 @@ class IterOrganizations:
 
             res_create = event_core.start_create(_posts, organization)
 
+            if res_create == 'no_login':
+                time.sleep(600)
+
+                return 'no_login'
+
             print(f'Закончил обработку "{organization}"\n')
 
         return True

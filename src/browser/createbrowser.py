@@ -49,6 +49,7 @@ class CreatBrowser:
         options.add_argument("window-size=1920,939")
 
         options.add_argument("--dns-prefetch-disable")
+
         options.add_argument("--disable-gpu")
 
         options.add_argument('--no-sandbox')
@@ -64,6 +65,8 @@ class CreatBrowser:
         try:
 
             self.driver = webdriver.Chrome(service=s, options=options)
+
+            self.driver.maximize_window()
 
         except Exception as es:
             print(f'Ошибка при создания браузера "{es}"')

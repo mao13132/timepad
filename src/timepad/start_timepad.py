@@ -36,7 +36,7 @@ class TimePad:
 
             res = await IterOrganizations(self.settings).start_iter()
 
-            print(f'Закончил работу с "{name_}" "{name_profile}"\n')
+            print(f'Закончил работу с "{name_}" "{name_profile}" Результат: "{res}"\n')
 
         print(f'Закончил работу со связкой')
 
